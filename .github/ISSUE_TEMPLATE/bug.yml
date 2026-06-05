@@ -1,0 +1,45 @@
+name: Bug Report
+description: Something is broken
+labels: [bug]
+
+body:
+  - type: dropdown
+    id: feature
+    attributes:
+      label: Which feature?
+      options:
+        - P1 Onboarding
+        - P2 Prescription Intel
+        - P3 WhatsApp Check-in
+        - P4 Insurance Agent
+        - P5 Family Access
+        - D1 Living Brief
+        - D2 Drug Interaction
+        - D3 Prescription Draft
+        - D4 Deterioration Alerts
+        - A1 Priority Queue
+        - A2 Vitals Intake
+        - A3 Inventory
+        - DB / Schema
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      placeholder: Describe the bug
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: "1. Call this endpoint with... 2. ..."
