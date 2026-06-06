@@ -22,7 +22,12 @@ jobs:
           cache-dependency-path: package-lock.json
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
 
       - name: Type check
         run: npm run typecheck || true
@@ -42,10 +47,12 @@ jobs:
 
       - name: Validate migration files
         run: |
-          for f in supabase/migrations/*.sql; do
-            echo "Checking $f..."
-            grep -n "create table\|create policy\|create index\|create function" "$f" || true
-          done
+          if [ -d supabase/migrations ]; then
+            for f in supabase/migrations/*.sql; do
+              echo "Checking $f..."
+              grep -n "create table\|create policy\|create index\|create function" "$f" || true
+            done
+          fi
           echo "✅ Migration files present"
 
   check-env-coverage:
