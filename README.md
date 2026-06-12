@@ -1,138 +1,386 @@
-# Verifact
+# Healthcare Opportunity Discovery
 
-**AI-native remote patient monitoring for Indian healthcare.**  
-Owns the between-visit signal. Voice-first. Vernacular-first. WhatsApp-delivered.
+### PES University Venture Labs / ABC Problem Discovery
 
----
+## Overview
 
-## Team & Ownership
+This repository contains the research, analysis, and discovery work completed during the Problem Discovery phase of our healthcare venture exploration.
 
-| Area | Owner | Files |
-|------|-------|-------|
-| Patient Features (P1–P5) | **Dev A** | `frontend/src/components/patient/`, `supabase/functions/onboarding/`, `supabase/functions/whatsapp-checkin/`, `supabase/functions/insurance-agent/` |
-| Doctor Features (D1–D4) | **Dev B** | `frontend/src/components/doctor/`, `supabase/functions/living-brief/`, `supabase/functions/drug-interaction/`, `supabase/functions/prescription-draft/`, `supabase/functions/deterioration-alerts/` |
-| Admin Features (A1–A4) | **Dev C** | `frontend/src/components/admin/`, `supabase/functions/priority-queue/`, `supabase/functions/vitals-intake/`, `supabase/functions/inventory/`, `supabase/functions/outcomes-dashboard/` |
-| DB Schema + Auth + Infra | **Dev D** | `supabase/migrations/`, `frontend/src/lib/`, `frontend/src/hooks/`, `.github/workflows/` |
+The objective of this project is not to build a product immediately, but to identify high-value healthcare problems through structured research, stakeholder interviews, market analysis, and opportunity evaluation.
 
----
+Our initial thesis focused on the problem of **Between-Visit Clinical Blackout** in chronic disease management. Through research, we expanded the scope to compare multiple healthcare opportunities and determine which problems exhibit the strongest combination of:
 
-## Tech Stack
-
-| Layer | Tool |
-|-------|------|
-| Frontend | Lovable / v0 (React + Tailwind) |
-| Backend | Supabase Edge Functions (Deno) |
-| Database + Auth | Supabase (Postgres + RLS) |
-| LLM | Groq `llama-3.3-70b-versatile` |
-| Transcription | Groq Whisper |
-| Vision | GPT-4o Vision |
-| Messaging | Twilio WhatsApp |
-| Vector Search | Supabase pgvector |
+* Pain severity
+* Frequency
+* Economic impact
+* Buyer willingness-to-pay
+* Venture-scale potential
 
 ---
 
-## Features at a Glance
+# Original Thesis
 
-### Patient
-- **P1** Conversational Health Onboarding
-- **P2** Prescription Intelligence (photo → drugs → reminders)
-- **P3** Daily WhatsApp Voice Check-in
-- **P4** Insurance Intelligence Agent
-- **P5** Family & Caregiver Access
+## Between-Visit Clinical Blackout
 
-### Doctor
-- **D1** Living Patient Brief (regenerated on every open)
-- **D2** Personalised Drug Interaction Reasoning
-- **D3** AI Prescription Drafting
-- **D4** Pattern-Based Deterioration Alerts
+### Definition
 
-### Admin
-- **A1** AI Patient Priority Queue
-- **A2** Vitals Intake with AI Contextualisation
-- **A3** Inventory Management
-- **A4** Hospital Outcomes Dashboard
+Patients with chronic conditions such as:
 
----
+* Diabetes
+* Hypertension
+* Cardiovascular Disease
+* Chronic Kidney Disease
 
-## Quick Start
+typically visit doctors every 30–90 days.
 
-### 1. Clone & install
+During the period between appointments, hospitals often lose visibility into:
 
-```bash
-git clone https://github.com/your-org/verifact.git
-cd verifact
-cp .env.example .env        # fill in your keys
-```
+* Medication adherence
+* Symptom progression
+* Lifestyle changes
+* Early warning signals
+* Patient deterioration
 
-### 2. Set up Supabase
-
-```bash
-# Install Supabase CLI if you haven't
-npm install -g supabase
-
-# Login and link to your project
-supabase login
-supabase link --project-ref YOUR_PROJECT_REF
-
-# Run all migrations (creates every table + RLS)
-supabase db push
-
-# Seed mock patients for local dev
-node scripts/seed.js
-```
-
-### 3. Run edge functions locally
-
-```bash
-supabase functions serve --env-file .env
-```
-
-### 4. Run frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
+This creates information gaps that can affect patient outcomes and operational efficiency.
 
 ---
 
-## Build Order (from spec)
+# Research Conducted
 
-| Phase | What | Owner | Est. |
-|-------|------|-------|------|
-| 1 | Supabase schema + auth + seed | Dev D | 2–3h |
-| 2 | P2 Prescription Intelligence | Dev A | 3–4h |
-| 3 | P1 Conversational Onboarding | Dev A | 4–5h |
-| 4 | D1 Living Brief + D2 Drug Interaction | Dev B | 4–5h |
-| 5 | P3 WhatsApp Check-in loop | Dev A | 6–8h |
-| 6 | A1 Priority Queue + A2 Vitals | Dev C | 3–4h |
-| 7 | A3 Inventory | Dev C | 3–4h |
-| 8 | P4, P5, D3, D4 | All | 8–10h |
+## Primary Research
 
----
+### Stakeholder Interviews
 
-## Branching Strategy
+Total Interviews Conducted: **18**
 
-```
-main          ← protected, always deployable
-dev           ← integration branch, all PRs merge here first
-feature/*     ← your working branch (e.g. feature/p2-prescription-intel)
-fix/*         ← bug fixes
-```
+Stakeholders Included:
 
-**PR rule:** at least 1 approval before merging to `dev`. No direct pushes to `main`.
+* Doctors
+* Patients
+* Care Coordinators
+* Hospital Administrators
+
+Research focused on:
+
+* Daily workflows
+* Operational bottlenecks
+* Communication patterns
+* Chronic care management
+* Hospital processes
+* Existing workarounds
 
 ---
 
-## Environment Variables
+## Secondary Research
 
-See `.env.example` for all required keys. Never commit `.env`.
+Sources Studied:
+
+* Healthcare reports
+* Industry publications
+* Community discussions
+* Hospital workflow analyses
+* Digital health trends
+* Indian healthcare ecosystem
 
 ---
 
-## Docs
+# Key Findings
 
-- [Database Schema](docs/schema.md)
-- [API Reference](docs/api.md)
-- [Contributing Guide](docs/contributing.md)
+## Finding 1
+
+### Between-Visit Visibility Gap Exists
+
+All stakeholder groups acknowledged some form of information loss between appointments.
+
+Common workarounds:
+
+* WhatsApp
+* Phone calls
+* Manual follow-ups
+* Excel tracking
+
+---
+
+## Finding 2
+
+### Care Coordinators Carry Significant Operational Burden
+
+Care coordinators often serve as the bridge between:
+
+* Patients
+* Doctors
+* Hospitals
+
+Pain points include:
+
+* Reading large volumes of messages
+* Manual prioritization
+* Follow-up tracking
+* Escalation management
+* Documentation
+
+---
+
+## Finding 3
+
+### WhatsApp Is Already Healthcare Infrastructure
+
+Many workflows rely heavily on:
+
+* WhatsApp messages
+* Voice notes
+* Informal communication channels
+
+This behavior appears consistent across multiple stakeholders.
+
+---
+
+## Finding 4
+
+### Buyer and User Are Different
+
+Users:
+
+* Doctors
+* Patients
+* Coordinators
+* Nurses
+
+Potential Buyers:
+
+* CFO
+* COO
+* CMO
+* Quality Head
+* Insurance Stakeholders
+
+This distinction became one of the most important discoveries during research.
+
+---
+
+# Opportunity Landscape
+
+During analysis we expanded beyond the original thesis and evaluated additional healthcare opportunities.
+
+## Opportunities Evaluated
+
+1. Between-Visit Visibility
+2. Care Coordinator Overload
+3. Documentation Burden
+4. Insurance Claims Workflow
+5. Readmission Prediction
+6. Compliance Automation
+7. Patient Adherence
+8. Fragmented Patient Data
+9. Appointment No-Shows
+10. Hospital Supply Chain
+11. OT Scheduling Optimization
+12. Revenue Cycle Management
+13. Clinical Documentation AI
+14. Vernacular Patient Communication
+15. Chronic Disease Monitoring
+
+---
+
+# Opportunity Evaluation Framework
+
+Each opportunity was analyzed using multiple dimensions.
+
+## Evaluation Criteria
+
+* Frequency
+* Severity
+* Economic Impact
+* Buyer Clarity
+* Existing Budget
+* Market Timing
+* Defensibility
+* Operational Complexity
+* Sales Complexity
+* Venture Potential
+
+---
+
+# Major Insights
+
+## Insight 1
+
+The most painful healthcare problems are not always the most valuable businesses.
+
+A problem may:
+
+* Affect many people
+* Be emotionally significant
+
+but still lack:
+
+* Budget
+* Buyers
+* Procurement pathways
+
+---
+
+## Insight 2
+
+Healthcare software is typically purchased by institutions rather than individual users.
+
+Successful solutions generally create measurable value for:
+
+* Hospital Operations
+* Finance Teams
+* Quality Teams
+* Insurance Organizations
+
+---
+
+## Insight 3
+
+Many healthcare problems are interconnected.
+
+Example:
+
+Documentation Issues
+↓
+Fragmented Data
+↓
+Visibility Gaps
+↓
+Coordinator Overload
+↓
+Delayed Intervention
+↓
+Readmissions
+
+This suggests that some problems may be symptoms while others are root causes.
+
+---
+
+# Current Position
+
+## Confirmed
+
+* Between-visit visibility is a real problem
+* Care coordinator overload exists
+* WhatsApp dominates communication workflows
+* Healthcare operations remain highly manual
+* Institutional buyers control purchasing decisions
+
+---
+
+## Uncertain
+
+* Which buyer has strongest willingness-to-pay
+* Which opportunity has shortest sales cycle
+* Which opportunity has strongest market pull
+* Which problem offers the best venture-scale opportunity
+
+---
+
+## Current Working Hypothesis
+
+The visibility gap remains important.
+
+However, greater value may exist when the problem is connected to:
+
+* Readmission prevention
+* Documentation infrastructure
+* Insurance intelligence
+* Operational efficiency
+
+rather than positioning it solely as a patient monitoring problem.
+
+---
+
+# Next Research Phase
+
+## Priority Areas
+
+### Buyer Validation
+
+Interview:
+
+* CFOs
+* COOs
+* CMOs
+* Revenue Cycle Leaders
+* Quality Directors
+
+---
+
+### Willingness-To-Pay Validation
+
+Determine:
+
+* Budget ownership
+* Procurement process
+* Purchasing thresholds
+* ROI expectations
+
+---
+
+### Opportunity Comparison
+
+Compare:
+
+* Insurance Claims
+* Documentation Burden
+* Coordinator Overload
+* Readmission Prediction
+* Between-Visit Visibility
+
+using real stakeholder evidence.
+
+---
+
+# Repository Structure
+
+/docs
+Research Notes
+
+/interviews
+Interview Summaries
+
+/decks
+Problem Discovery Presentations
+
+/frameworks
+Opportunity Evaluation Frameworks
+
+/analysis
+Market Analysis and Opportunity Mapping
+
+/roadmaps
+Research Plans and Validation Plans
+
+---
+
+# Current Status
+
+Phase: Problem Discovery
+
+Status: Active Research
+
+Product Built: No
+
+Solution Selected: No
+
+Current Goal:
+
+Identify the healthcare problem with the strongest combination of:
+
+* Severity
+* Frequency
+* Economic Impact
+* Buyer Clarity
+* Willingness-To-Pay
+* Venture Potential
+
+before committing to product development.
+
+---
+
+# Guiding Principle
+
+Evidence First.
+Buyer Second.
+Product Third.
